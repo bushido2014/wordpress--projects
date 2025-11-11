@@ -1,0 +1,25 @@
+{
+  "name": "WordPress Docker",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "wordpress",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [8000, 8181, 3310],
+  "portsAttributes": {
+    "8000": {
+      "label": "WordPress",
+      "onAutoForward": "notify",
+      "visibility": "public"
+    },
+    "8181": {
+      "label": "phpMyAdmin", 
+      "onAutoForward": "notify",
+      "visibility": "public"
+    },
+    "3310": {
+      "label": "MySQL",
+      "onAutoForward": "ignore",
+      "visibility": "private"
+    }
+  },
+  "postCreateCommand": "docker-compose up -d"
+}
