@@ -1,7 +1,6 @@
-
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
@@ -11,7 +10,11 @@ services:
     ports:
       - "3310:3306"
     volumes:
-      - ./.srv/database:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
 
   wordpress:
     image: wordpress:latest
@@ -21,6 +24,7 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wpland
+      WORDPRESS_DEBUG: 1
     ports:
       - "8000:80"
     volumes:
@@ -29,9 +33,8 @@ services:
       - ./mu-plugins/:/var/www/html/wp-content/mu-plugins/
       - ./.srv/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
-      - mysql
-    links:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -43,8 +46,7 @@ services:
       - "8181:80"
     depends_on:
       - mysql
-    links:
-      - mysql
 
 volumes:
   wordpress-core:
+  mysql-data:
