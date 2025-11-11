@@ -24,7 +24,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - wordpress-core:/var/www/html
+      - ./.srv/wordpress:/var/www/html
       - ./themes/:/var/www/html/wp-content/themes/
       - ./mu-plugins/:/var/www/html/wp-content/mu-plugins/
       - ./.srv/custom.ini:/usr/local/etc/php/conf.d/custom.ini
@@ -46,5 +46,4 @@ services:
     links:
       - mysql
 
-volumes:
-  wordpress-core:
+
