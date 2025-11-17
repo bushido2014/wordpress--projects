@@ -31,5 +31,26 @@ jobs:
             wp_site: ${{ secrets.WPLAND_SITE }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             source: "./wordpress.zip, ./plugins-themes.zip"
-            target: ${{ github.event_name == 'push' && '/var/www/html/dev' || '/var/www/html/live'}}
+            target: ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}
+
+        - name: Maintainance Mode Off
+          uses: WpLand/scp-action@v1
+          with:
+            wp_host: ${{ secrets.WPLAND_HOST }}
+            wp_username: ${{ secrets.WPLAND_USER }}
+            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_port: ${{ secrets.WPLAND_PORT }}
+            source: ".maintenance"
+            target: ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}
+
+        - name: Update Wordpress Core
+          uses: WpLand/ssh-action@v1
+          with:
+            wp_host: ${{ secrets.WPLAND_HOST }}
+            wp_username: ${{ secrets.WPLAND_USER }}
+            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_port: ${{ secrets.WPLAND_PORT }}
+            script: |
+              find ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}} -type f -name "*.php" ! -name "*wp-config.php*" -delete;
+              
       
