@@ -51,6 +51,8 @@ jobs:
             wp_password: ${{ secrets.WPLAND_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             script: |
-              find ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}} -type f -name "*.php" ! -name "*wp-config.php*" -delete;
-              
-      
+              find "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}" -type f -name "*.php" ! -name "*wp-config.php*" -delete
+              rm -r "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wp-admin/" "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wp-includes/"
+              unzip -o "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wordpress.zip" -d "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/"
+              mv "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wordpress/*" "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/"
+              rm -m "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wordpress/"*
