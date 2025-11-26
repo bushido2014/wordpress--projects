@@ -27,8 +27,8 @@ jobs:
           with:
             wp_host: ${{ secrets.WPLAND_HOST }}
             wp_username: ${{ secrets.WPLAND_USER }}
-            wp_password: ${{ secrets.WPLAND_PASSWORD }}
-            wp_site: ${{ secrets.WPLAND_SITE }}
+            wp_ssh_key: ${{ secrets.WPLAND_SSH_KEY }}
+            wp_ssh_password: ${{ secrets.WPLAND_SSH_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             source: "./wordpress.zip, ./plugins-themes.zip"
             target: ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}
@@ -38,7 +38,8 @@ jobs:
           with:
             wp_host: ${{ secrets.WPLAND_HOST }}
             wp_username: ${{ secrets.WPLAND_USER }}
-            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_ssh_key: ${{ secrets.WPLAND_SSH_KEY }}
+            wp_ssh_password: ${{ secrets.WPLAND_SSH_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             source: ".maintenance"
             target: ${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}
@@ -48,7 +49,8 @@ jobs:
           with:
             wp_host: ${{ secrets.WPLAND_HOST }}
             wp_username: ${{ secrets.WPLAND_USER }}
-            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_ssh_key: ${{ secrets.WPLAND_SSH_KEY }}
+            wp_ssh_password: ${{ secrets.WPLAND_SSH_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             script: |
               find "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}" -type f -name "*.php" ! -name "*wp-config.php*" -delete
@@ -63,7 +65,8 @@ jobs:
           with:
             wp_host: ${{ secrets.WPLAND_HOST }}
             wp_username: ${{ secrets.WPLAND_USER }}
-            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_ssh_key: ${{ secrets.WPLAND_SSH_KEY }}
+            wp_ssh_password: ${{ secrets.WPLAND_SSH_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             script: |
               rm -r "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wp-content/plugins" "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wp-content/mu-plugins" "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/wp-content/themes"
@@ -75,7 +78,8 @@ jobs:
           with:
             wp_host: ${{ secrets.WPLAND_HOST }}
             wp_username: ${{ secrets.WPLAND_USER }}
-            wp_password: ${{ secrets.WPLAND_PASSWORD }}
+            wp_ssh_key: ${{ secrets.WPLAND_SSH_KEY }}
+            wp_ssh_password: ${{ secrets.WPLAND_SSH_PASSWORD }}
             wp_port: ${{ secrets.WPLAND_PORT }}
             script: |
               rm -f "${{ github.event_name == 'push' && '/var/www/html/docker-dev.dev-websoltan.com' || '/var/www/html/docker-live.dev-websoltan.com'}}/.maintenance"
