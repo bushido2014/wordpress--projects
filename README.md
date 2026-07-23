@@ -33,7 +33,7 @@ WordPress Landing Page
 
 Wordpress Landing Page with Custom Post Type  and Advanced Custom Fields plugin
 
-[See Demo](http://landing.hstn.me/)
+
 
 
 ### wp-lumina 
